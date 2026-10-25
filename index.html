@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#b5121b">
+  <meta name="description" content="দেশজুড়ে সর্বশেষ সংবাদ, জাতীয় খবর, রাজনীতি, অর্থনীতি, শিক্ষা, চাকরি ও খেলাধুলা।">
+  <title>দেশবার্তা | জাতীয় সংবাদ</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="topline"><div class="wrap top-inner"><span>দেশজুড়ে নির্ভরযোগ্য সংবাদ</span><span id="today"></span></div></div>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="index.html" aria-label="দেশবার্তা হোম"><span class="brand-mark">দে</span><span><strong>দেশবার্তা</strong><small>সত্যের পথে, মানুষের পাশে</small></span></a>
+      <a class="admin-link" href="admin.html">অ্যাডমিন লগইন ↗</a>
+    </div>
+  </header>
+  <nav class="nav"><div class="wrap nav-inner">
+    <a class="active" href="index.html">প্রচ্ছদ</a>
+    <a href="#জাতীয়" data-category="জাতীয়">জাতীয়</a><a href="#সারাদেশ" data-category="সারাদেশ">সারাদেশ</a>
+    <a href="#রাজনীতি" data-category="রাজনীতি">রাজনীতি</a><a href="#অর্থনীতি" data-category="অর্থনীতি">অর্থনীতি</a>
+    <a href="#শিক্ষা" data-category="শিক্ষা">শিক্ষা</a><a href="#চাকরি" data-category="চাকরি">চাকরি</a>
+    <a href="#খেলাধুলা" data-category="খেলাধুলা">খেলাধুলা</a>
+  </div></nav>
+  <main class="wrap main">
+    <section class="breaking"><span class="breaking-label">সর্বশেষ</span><div id="ticker">দেশবার্তায় স্বাগতম — যাচাইকৃত তথ্য ও নিজস্ব সংবাদ প্রকাশ করুন।</div></section>
+    <div class="section-head"><div><span class="eyebrow">আপডেটেড সংবাদ</span><h1 id="section-title">সর্বশেষ সংবাদ</h1></div>
+      <label class="searchbox"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="সংবাদ খুঁজুন..." aria-label="সংবাদ খুঁজুন"></label>
+    </div>
+    <div id="status" class="notice">সংবাদ লোড হচ্ছে…</div>
+    <section id="news-grid" class="news-grid" aria-live="polite"></section>
+    <div class="load-row"><button id="load-more" class="btn btn-outline" hidden>আরও সংবাদ দেখুন</button></div>
+    <section class="editorial-note"><strong>সম্পাদকের নোট</strong><p>প্রকাশের আগে তথ্য যাচাই করুন। সংবাদে তথ্যসূত্র উল্লেখ করুন এবং ভুল ধরা পড়লে দ্রুত সংশোধন প্রকাশ করুন।</p></section>
+  </main>
+  <footer class="footer"><div class="wrap footer-inner"><div><strong>দেশবার্তা</strong><p>জাতীয় ও সারাদেশের সংবাদ</p></div><div class="footer-links"><a href="about.html">আমাদের সম্পর্কে</a><a href="contact.html">যোগাযোগ</a><a href="privacy.html">গোপনীয়তা নীতি</a></div><small>© <span id="year"></span> দেশবার্তা। সর্বস্বত্ব সংরক্ষিত।</small></div></footer>
+</body>
+</html>
