@@ -8,6 +8,9 @@
 <form id="news-form" class="form"><input id="news-id" type="hidden"><label>সংবাদের শিরোনাম<input id="title" maxlength="180" required placeholder="সংবাদের শিরোনাম লিখুন"></label>
 <div class="form-two"><label>বিভাগ<select id="category"><option>জাতীয়</option><option>সারাদেশ</option><option>রাজনীতি</option><option>অর্থনীতি</option><option>শিক্ষা</option><option>চাকরি</option><option>খেলাধুলা</option><option>আন্তর্জাতিক</option><option>প্রযুক্তি</option><option>বিনোদন</option></select></label><label>লেখকের নাম<input id="author" maxlength="80" value="নিজস্ব প্রতিবেদক" required></label></div>
 <label>কভার ছবির URL (ঐচ্ছিক)<input id="image-url" type="url" placeholder="https://..."></label><label>সংক্ষিপ্ত বিবরণ<textarea id="summary" rows="3" maxlength="400" required placeholder="সংবাদের সংক্ষিপ্ত বিবরণ"></textarea></label>
+  <label>ফোনের গ্যালারি থেকে কভার ছবি
+  <input id="image-file" type="file" accept="image/*">
+  </label>
 <label>পূর্ণ সংবাদ<textarea id="body" rows="10" required placeholder="তথ্যসূত্র যাচাই করে সংবাদ লিখুন। অনুচ্ছেদ আলাদা করতে নতুন লাইন দিন।"></textarea></label><label>তথ্যসূত্র / সোর্স URL (ঐচ্ছিক)<input id="source-url" type="url" placeholder="https://বিশ্বস্ত-সূত্র..."></label>
 <div class="form-two"><label class="check-label"><input id="featured" type="checkbox"> প্রধান সংবাদ হিসেবে দেখান</label><label class="check-label"><input id="published" type="checkbox" checked> প্রকাশ করুন</label></div>
 <div class="button-row"><button class="btn" type="submit">সংবাদ সংরক্ষণ করুন</button><button class="btn btn-outline" id="reset-form" type="button">ফর্ম পরিষ্কার</button></div></form>
