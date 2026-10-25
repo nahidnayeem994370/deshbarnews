@@ -16,7 +16,8 @@
     document.title = `${n.title} | দেশবার্তা`;
     const image = n.image_url ? `<img class="article-cover" src="${esc(n.image_url)}" alt="${esc(n.title)}">` : "";
     const paragraphs = String(n.body || "").split(/\n+/).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join("");
-    const source = n.source_url ? `<p class="source-line">তথ্যসূত্র: <a href="${esc(n.source_url)}" rel="noopener noreferrer" target="_blank">মূল সূত্র দেখুন ↗</a></p>` : "";
+    const isJob = n.category === "চাকরি";
+    const source = n.source_url && isJob ? `<div class="apply-button-wrap"><a class="apply-button" href="${esc(n.source_url)}" rel="noopener noreferrer" target="_blank">আবেদন করুন ↗</a></div>` : (n.source_url ? `<p class="source-line">তথ্যসূত্র: <a href="${esc(n.source_url)}" rel="noopener noreferrer" target="_blank">মূল সূত্র দেখুন ↗</a></p>` : "");
     const pageUrl = window.location.href;
     const shareUrl = encodeURIComponent(pageUrl);
     const shareTitle = encodeURIComponent(n.title);
