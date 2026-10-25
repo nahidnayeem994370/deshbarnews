@@ -1,9 +1,4 @@
-/*
-  SETUP: Supabase Dashboard > Project Settings > API
-  এখানে Project URL এবং anon/public key বসান।
-  কখনো service_role/secret key এই ফাইলে রাখবেন না।
-*/
 window.NEWS_CONFIG = {
-  SUPABASE_URL: "https://YOUR-PROJECT.supabase.co",
-  SUPABASE_ANON_KEY: "YOUR_SUPABASE_ANON_PUBLIC_KEY"
+  SUPABASE_URL: "https://odgtnfjiedzuugmfwnrc.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_wlV9Wa5qe1UxXgBzGZxC2w_hSWqm1uI"
 };
