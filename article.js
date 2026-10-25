@@ -17,8 +17,35 @@
     const image = n.image_url ? `<img class="article-cover" src="${esc(n.image_url)}" alt="${esc(n.title)}">` : "";
     const paragraphs = String(n.body || "").split(/\n+/).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join("");
     const source = n.source_url ? `<p class="source-line">তথ্যসূত্র: <a href="${esc(n.source_url)}" rel="noopener noreferrer" target="_blank">মূল সূত্র দেখুন ↗</a></p>` : "";
-    article.innerHTML = `<div class="meta">${esc(n.category)} · ${date(n.created_at)}</div><h1>${esc(n.title)}</h1><p class="article-summary">${esc(n.summary)}</p><div class="byline">প্রতিবেদক: ${esc(n.author || "নিজস্ব প্রতিবেদক")}</div>${image}<div class="article-body">${paragraphs}</div>${source}<a class="back-link" href="index.html">← সব সংবাদে ফিরুন</a>`;
+    const pageUrl = window.location.href;
+    const shareUrl = encodeURIComponent(pageUrl);
+    const shareTitle = encodeURIComponent(n.title);
+    article.innerHTML = `<div class="meta">${esc(n.category)} · ${date(n.created_at)}</div><h1>${esc(n.title)}</h1><p class="article-summary">${esc(n.summary)}</p><div class="byline">প্রতিবেদক: ${esc(n.author || "নিজস্ব প্রতিবেদক")}</div>${image}<div class="article-body">${paragraphs}</div>${source}<section class="share-box" aria-label="সংবাদ শেয়ার করুন"><strong>সংবাদটি শেয়ার করুন</strong><div class="share-actions"><button class="share-btn share-native" id="share-native" type="button">↗ শেয়ার</button><a class="share-btn share-whatsapp" href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener noreferrer">Facebook</a><button class="share-btn share-copy" id="share-copy" type="button">লিংক কপি</button></div><p class="share-feedback" id="share-feedback" aria-live="polite"></p></section><a class="back-link" href="index.html">← সব সংবাদে ফিরুন</a>`;
     status.hidden = true; article.hidden = false;
+    const shareButton = $("#share-native");
+    const copyButton = $("#share-copy");
+    const feedback = $("#share-feedback");
+    shareButton.addEventListener("click", async () => {
+      if (navigator.share) {
+        try { await navigator.share({title:n.title, text:n.summary || n.title, url:pageUrl}); }
+        catch (error) { if (error.name !== "AbortError") feedback.textContent = "শেয়ার করা যায়নি। অন্য বাটন ব্যবহার করুন।"; }
+      } else {
+        feedback.textContent = "WhatsApp বা Facebook বাটন ব্যবহার করুন, অথবা লিংক কপি করুন।";
+      }
+    });
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(pageUrl);
+        feedback.textContent = "সংবাদের লিংক কপি হয়েছে।";
+      } catch (error) {
+        const field = document.createElement("textarea");
+        field.value = pageUrl; field.setAttribute("readonly", "");
+        field.style.position = "fixed"; field.style.opacity = "0";
+        document.body.appendChild(field); field.select();
+        const copied = document.execCommand("copy"); field.remove();
+        feedback.textContent = copied ? "সংবাদের লিংক কপি হয়েছে।" : "লিংক কপি হয়নি; ব্রাউজারের ঠিকানা থেকে কপি করুন।";
+      }
+    });
   }
   async function init() {
     if (!id) { status.textContent="সংবাদ নির্বাচন করা হয়নি।"; return; }
