@@ -128,3 +128,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 @media(prefers-reduced-motion:reduce){
   .news-card,.card-image img,.btn,.admin-link,.searchbox{transition:none}
 }
+
+/* Article sharing controls */
+.share-box{margin-top:26px;padding:17px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,#fff,#f8fafc)}
+.share-box>strong{display:block;margin-bottom:11px;font-size:16px}
+.share-actions{display:flex;flex-wrap:wrap;gap:9px}
+.share-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 13px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+.share-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px #17202b10}
+.share-native{background:var(--red);color:#fff;border-color:var(--red)}
+.share-whatsapp{color:#126b39;border-color:#b8e4ca;background:#f0fff5}
+.share-facebook{color:#1556a8;border-color:#c5d8f5;background:#f2f7ff}
+.share-feedback{min-height:0;margin:8px 0 0;color:var(--muted);font-size:13px}
+.share-feedback:empty{display:none}
+@media(max-width:540px){.share-box{padding:13px;margin-top:20px}.share-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.share-btn{width:100%;padding:9px 7px}}
