@@ -32,6 +32,34 @@
   $("#news-form").addEventListener("submit",async e=>{
     e.preventDefault();if(!session){msg("সেশন শেষ হয়েছে। আবার লগইন করুন।",true);return;}
     const button=e.submitter;button.disabled=true;
+    let image_url:imageUrl
+const file = $("#image-file")?.files?.[0];
+
+if (file) {
+  if (!file.type.startsWith("image/") || file.size > 5 * 1024 * 1024) {
+    msg("ছবি হতে হবে এবং সাইজ ৫ MB-এর কম হতে হবে।", true);
+    button.disabled = false;
+    return;
+  }
+
+  const ext = file.name.split(".").pop().toLowerCase()
+    .replace(/[^a-z0-9]/g, "") || "jpg";
+  const path = `${session.user.id}/${Date.now()}.${ext}`;
+
+  const { data, error } = await client.storage
+    .from("news-images")
+    .upload(path, file, { contentType: file.type });
+
+  if (error) {
+    msg("ছবি আপলোড হয়নি। আবার চেষ্টা করুন।", true);
+    button.disabled = false;
+    return;
+  }
+
+  imageUrl = client.storage
+    .from("news-images")
+    .getPublicUrl(data.path).data.publicUrl;
+}
     const row={title:$("#title").value.trim(),category:$("#category").value,author:$("#author").value.trim(),image_url:$("#image-url").value.trim()||null,summary:$("#summary").value.trim(),body:$("#body").value.trim(),source_url:$("#source-url").value.trim()||null,featured:$("#featured").checked,published:$("#published").checked,updated_at:new Date().toISOString(),created_by:session.user.id};
     const id=$("#news-id").value;
     const result=id?await client.from("news").update(row).eq("id",id).select("id").maybeSingle():await client.from("news").insert(row).select("id").single();
