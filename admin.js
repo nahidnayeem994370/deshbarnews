@@ -32,8 +32,8 @@
   $("#news-form").addEventListener("submit",async e=>{
     e.preventDefault();if(!session){msg("সেশন শেষ হয়েছে। আবার লগইন করুন।",true);return;}
     const button=e.submitter;button.disabled=true;
-    let image_url:imageUrl
-const file = $("#image-file")?.files?.[0];
+    let imageUrl = $("#image-url").value.trim() || null;
+    const file = $("#image-file")?.files?.[0];
 
 if (file) {
   if (!file.type.startsWith("image/") || file.size > 5 * 1024 * 1024) {
@@ -60,7 +60,7 @@ if (file) {
     .from("news-images")
     .getPublicUrl(data.path).data.publicUrl;
 }
-    const row={title:$("#title").value.trim(),category:$("#category").value,author:$("#author").value.trim(),image_url:$("#image-url").value.trim()||null,summary:$("#summary").value.trim(),body:$("#body").value.trim(),source_url:$("#source-url").value.trim()||null,featured:$("#featured").checked,published:$("#published").checked,updated_at:new Date().toISOString(),created_by:session.user.id};
+    const row={title:$("#title").value.trim(),category:$("#category").value,author:$("#author").value.trim(),image_url:imageUrl,summary:$("#summary").value.trim(),body:$("#body").value.trim(),source_url:$("#source-url").value.trim()||null,featured:$("#featured").checked,published:$("#published").checked,updated_at:new Date().toISOString(),created_by:session.user.id};
     const id=$("#news-id").value;
     const result=id?await client.from("news").update(row).eq("id",id).select("id").maybeSingle():await client.from("news").insert(row).select("id").single();
     button.disabled=false;
