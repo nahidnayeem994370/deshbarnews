@@ -27,6 +27,19 @@
     <a href="#খেলাধুলা" data-category="খেলাধুলা">খেলাধুলা</a>
   </div></nav>
   <main class="wrap main">
+    <section class="deshbar-banner" aria-label="দেশবার্তা পরিচিতি">
+      <div class="deshbar-banner-copy">
+        <span class="deshbar-kicker">সত্যনিষ্ঠ সংবাদ • প্রতিদিন</span>
+        <h1>দেশবার্তা</h1>
+        <p>দেশের খবর, মানুষের কথা — নির্ভরযোগ্য সংবাদ আপনার হাতেই।</p>
+        <a href="#news-grid" class="deshbar-banner-cta">সর্বশেষ সংবাদ পড়ুন <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="deshbar-banner-art" aria-hidden="true">
+        <div class="banner-orbit orbit-one"></div><div class="banner-orbit orbit-two"></div>
+        <div class="banner-paper"><span>দেশ</span><strong>বার্তা</strong><i></i><i></i><i></i></div>
+        <div class="banner-dot dot-one"></div><div class="banner-dot dot-two"></div><div class="banner-dot dot-three"></div>
+      </div>
+    </section>
     <section class="breaking"><span class="breaking-label">সর্বশেষ</span><div id="ticker">দেশবার্তায় স্বাগতম — যাচাইকৃত তথ্য ও নিজস্ব সংবাদ প্রকাশ করুন।</div></section>
     <div class="section-head"><div><span class="eyebrow">আপডেটেড সংবাদ</span><h1 id="section-title">সর্বশেষ সংবাদ</h1></div>
       <label class="searchbox"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="সংবাদ খুঁজুন..." aria-label="সংবাদ খুঁজুন"></label>
@@ -40,6 +53,26 @@
   <style>
     .footer-admin-link { display: block; width: fit-content; margin-top: 5px; font-size: 11px; opacity: .65; text-decoration: none; }
     .footer-admin-link:hover { opacity: 1; text-decoration: underline; }
+  
+    .deshbar-banner{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:245px;margin:22px 0 28px;padding:clamp(24px,5vw,48px);overflow:hidden;border-radius:22px;background:linear-gradient(115deg,#650b17 0%,#b5121b 52%,#ed5a43 100%);color:#fff;box-shadow:0 14px 34px rgba(111,14,28,.18)}
+    .deshbar-banner:before{content:"";position:absolute;z-index:-1;width:320px;height:320px;right:14%;top:-205px;border:1px solid rgba(255,255,255,.18);border-radius:50%;box-shadow:0 0 0 28px rgba(255,255,255,.035),0 0 0 58px rgba(255,255,255,.03)}
+    .deshbar-banner-copy{position:relative;z-index:2;max-width:590px}
+    .deshbar-kicker{display:inline-block;margin-bottom:12px;padding:6px 11px;border:1px solid rgba(255,255,255,.3);border-radius:999px;background:rgba(255,255,255,.1);font-size:12px;letter-spacing:.04em}
+    .deshbar-banner h1{margin:0 0 8px;color:#fff;font-size:clamp(36px,6vw,58px);font-weight:900;line-height:1.15;letter-spacing:-.04em}
+    .deshbar-banner p{max-width:440px;margin:0 0 22px;color:rgba(255,255,255,.88);font-size:clamp(14px,2vw,18px);line-height:1.8}
+    .deshbar-banner-cta{display:inline-flex;align-items:center;gap:12px;padding:11px 17px;border-radius:9px;background:#fff;color:#8e101d;text-decoration:none;font-weight:800;font-size:14px;transition:transform .2s,box-shadow .2s}
+    .deshbar-banner-cta:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.16)}
+    .deshbar-banner-art{position:relative;flex:0 0 200px;height:180px;margin-right:3%;display:grid;place-items:center}
+    .banner-orbit{position:absolute;border:1px solid rgba(255,255,255,.28);border-radius:50%;transform:rotate(-24deg)}
+    .orbit-one{width:190px;height:120px}.orbit-two{width:150px;height:190px}
+    .banner-paper{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:112px;height:132px;border-radius:8px;background:#fff9ed;color:#a50f20;box-shadow:10px 12px 0 rgba(69,0,8,.17);transform:rotate(5deg)}
+    .banner-paper span{font-size:19px;font-weight:800}.banner-paper strong{font-size:28px;font-weight:900;line-height:1.1}
+    .banner-paper i{display:block;width:62px;height:3px;margin-top:7px;border-radius:4px;background:#e8c8bd}.banner-paper i:last-child{width:43px}
+    .banner-dot{position:absolute;width:9px;height:9px;border-radius:50%;background:#ffdca2;box-shadow:0 0 0 6px rgba(255,220,162,.12)}
+    .dot-one{top:17px;right:20px}.dot-two{bottom:18px;left:8px;width:6px;height:6px}.dot-three{top:40px;left:12px;width:5px;height:5px}
+    @media(max-width:600px){.deshbar-banner{min-height:0;padding:25px 20px;border-radius:16px}.deshbar-banner-art{flex-basis:92px;height:130px;margin-right:-7px;transform:scale(.78);transform-origin:center right}.deshbar-banner-copy{min-width:0}.deshbar-banner h1{font-size:35px}.deshbar-banner p{font-size:13px;line-height:1.65}.deshbar-kicker{font-size:10px}.deshbar-banner-cta{font-size:12px;padding:10px 12px}.banner-orbit.orbit-one{width:150px}.banner-orbit.orbit-two{height:150px}}
+    @media(max-width:380px){.deshbar-banner-art{display:none}}
+
   </style>
 </body>
 </html>
