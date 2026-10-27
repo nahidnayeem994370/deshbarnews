@@ -22,8 +22,9 @@
     const pageUrl = window.location.href;
     const shareUrl = encodeURIComponent(pageUrl);
     const shareTitle = encodeURIComponent(n.title);
-    article.innerHTML = `<div class="meta">${esc(n.category)} · ${date(n.created_at)}</div><h1>${esc(n.title)}</h1><p class="article-summary">${esc(n.summary)}</p><div class="byline">প্রতিবেদক: ${esc(n.author || "নিজস্ব প্রতিবেদক")}</div>${image}<div class="article-body">${paragraphs}</div>${source}<section class="comments-box" id="comments-box"><h2>মন্তব্য করুন</h2><p class="comments-note">মন্তব্য করতে Google অ্যাকাউন্ট দিয়ে লগইন করুন। আপনার নাম Google প্রোফাইল বা ইমেইল থেকে দেখানো হবে।</p><div id="comment-auth"></div><form id="comment-form" class="comment-form" hidden><textarea id="comment-text" rows="3" maxlength="1200" required placeholder="আপনার মন্তব্য লিখুন..."></textarea><button class="btn" type="submit">মন্তব্য প্রকাশ করুন</button></form><p id="comment-status" class="comment-status" aria-live="polite"></p><div id="comment-list" class="comment-list"><p>মন্তব্য লোড হচ্ছে…</p></div></section><section class="share-box" aria-label="সংবাদ শেয়ার করুন"><strong>সংবাদটি শেয়ার করুন</strong><div class="share-actions"><button class="share-btn share-native" id="share-native" type="button">↗ শেয়ার</button><a class="share-btn share-whatsapp" href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener noreferrer">Facebook</a><button class="share-btn share-copy" id="share-copy" type="button">লিংক কপি</button></div><p class="share-feedback" id="share-feedback" aria-live="polite"></p></section><a class="back-link" href="index.html">← সব সংবাদে ফিরুন</a>`;
+    article.innerHTML = `<div class="meta">${esc(n.category)} · ${date(n.created_at)}</div><h1>${esc(n.title)}</h1><p class="article-summary">${esc(n.summary)}</p><div class="byline">প্রতিবেদক: ${esc(n.author || "নিজস্ব প্রতিবেদক")}</div>${image}<div class="article-body">${paragraphs}</div>${source}<section class="more-news" id="more-news"><h2>আরো খবর</h2><div id="more-news-list" class="more-news-list"><p>আরো খবর লোড হচ্ছে…</p></div></section><section class="comments-box" id="comments-box"><h2>মন্তব্য করুন</h2><p class="comments-note">মন্তব্য করতে Google অ্যাকাউন্ট দিয়ে লগইন করুন। আপনার নাম Google প্রোফাইল বা ইমেইল থেকে দেখানো হবে।</p><div id="comment-auth"></div><form id="comment-form" class="comment-form" hidden><textarea id="comment-text" rows="3" maxlength="1200" required placeholder="আপনার মন্তব্য লিখুন..."></textarea><button class="btn" type="submit">মন্তব্য প্রকাশ করুন</button></form><p id="comment-status" class="comment-status" aria-live="polite"></p><div id="comment-list" class="comment-list"><p>মন্তব্য লোড হচ্ছে…</p></div></section><section class="share-box" aria-label="সংবাদ শেয়ার করুন"><strong>সংবাদটি শেয়ার করুন</strong><div class="share-actions"><button class="share-btn share-native" id="share-native" type="button">↗ শেয়ার</button><a class="share-btn share-whatsapp" href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener noreferrer">Facebook</a><button class="share-btn share-copy" id="share-copy" type="button">লিংক কপি</button></div><p class="share-feedback" id="share-feedback" aria-live="polite"></p></section><a class="back-link" href="index.html">← সব সংবাদে ফিরুন</a>`;
     status.hidden = true; article.hidden = false;
+    loadMoreNews(n);
     const shareButton = $("#share-native");
     const copyButton = $("#share-copy");
     const feedback = $("#share-feedback");
@@ -49,6 +50,30 @@
       }
     });
   }
+  async function loadMoreNews(current) {
+    const host = $("#more-news-list");
+    if (!host) return;
+    let items = [];
+    if (client && current.id && !String(current.id).startsWith("demo-")) {
+      try {
+        let query = client.from("news").select("id,title,category,summary,image_url,created_at").eq("published", true).neq("id", current.id).order("created_at", {ascending:false}).limit(20);
+        const {data,error} = await query;
+        if (error) throw error;
+        items = data || [];
+      } catch (e) {
+        host.innerHTML = "<p>আরো খবর লোড করা যায়নি।</p>";
+        return;
+      }
+    } else {
+      items = Object.entries(demo).filter(([key]) => key !== current.id).map(([id,n]) => ({id,...n})).slice(0,20);
+    }
+    if (!items.length) {
+      host.innerHTML = "<p>এখনো অন্য কোনো প্রকাশিত সংবাদ নেই।</p>";
+      return;
+    }
+    host.innerHTML = items.map(n => `<a class="more-news-item" href="article.html?id=${encodeURIComponent(n.id)}">${n.image_url ? `<img src="${esc(n.image_url)}" alt="" loading="lazy">` : ""}<span><small>${esc(n.category || "সংবাদ")} · ${date(n.created_at)}</small><strong>${esc(n.title)}</strong></span><b aria-hidden="true">›</b></a>`).join("");
+  }
+
   async function setupComments(newsId) {
     const authBox=$("#comment-auth"), form=$("#comment-form"), list=$("#comment-list"), feedback=$("#comment-status");
     async function refreshComments(){
